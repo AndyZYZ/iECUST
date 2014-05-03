@@ -9,20 +9,50 @@
 
   <link href="css/codiqa.ext.css" rel="stylesheet">
   <link href="css/jquery.mobile-1.4.2.css" rel="stylesheet">
-  <link rel="stylesheet" href="themes/iECUST.min.css" />
-  <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
-
+jquery mobile parse
   <link rel="stylesheet" type="text/css" href="css/style.css">
 
-  <script src="scrpit/jquery-2.0.0.min.js"></script>
+  <script src="script/jquery.min.js"></script>
   <script src="script/jquery.mobile-1.4.2.min.js"></script>
   <script src="script/codiqa.ext.js"></script>
 
+  <script src="script/parse-1.2.18.min.js"></script>
+  
   <script src="script/script.js"></script>
 
+  
+  
 </head>
 <body>
+
+<script type="text/javascript">
+       
+	   
+	   
+	   $(document).ready(function(){
+            $("#login-submit").bind("click",function(){
+			    Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
+				var user = new Parse.User();
+				user.set("username", "my name");
+				user.set("password", "my pass");
+				user.set("email", "email@example.com");
+  
+				// other fields can be set just like with Parse.Object
+				user.set("phone", "650-555-0000");
+  
+				user.signUp(null, {
+				  success: function(user) {
+					// Hooray! Let them use the app now.
+				  },
+				  error: function(user, error) {
+					// Show the error message somewhere and let the user try again.
+					alert("Error: " + error.code + " " + error.message);
+				  }
+				});
+			});
+		});
+</script>
+
 <div data-role="page" data-control-title="login" id="pageLogin" class="myPage">
     <div id="login-header" data-theme="a" data-role="header" class="myHeader">
         <h1 id="login-label" class="ui-title myLabel">
