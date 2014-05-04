@@ -32,23 +32,23 @@ jquery mobile parse
 	   $(document).ready(function(){
             $("#login-submit").bind("click",function(){
 			    Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
-				var user = new Parse.User();
-				user.set("username", "my name");
-				user.set("password", "my pass");
-				user.set("email", "email@example.com");
-  
-				// other fields can be set just like with Parse.Object
-				user.set("phone", "650-555-0000");
-  
-				user.signUp(null, {
-				  success: function(user) {
-					// Hooray! Let them use the app now.
-				  },
-				  error: function(user, error) {
-					// Show the error message somewhere and let the user try again.
-					alert("Error: " + error.code + " " + error.message);
-				  }
+				
+				var myname = $("#login-studentnumber").val();
+				var mypass = $("#login-password").val();
+				
+				Parse.User.logIn(myname, mypass, {
+					success: function(user) {
+					// Do stuff after successful login.
+					alert('登录成功')
+					window.location.href = "#pageHome";
+					},
+					error: function(user, error) {
+					// The login failed. Check error to see why.
+					alert('登录失败')
+					}
 				});
+  
+				
 			});
 		});
 </script>
