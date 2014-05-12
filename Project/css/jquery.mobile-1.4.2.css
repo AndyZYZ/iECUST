@@ -3688,7 +3688,7 @@ fieldset.ui-controlgroup {
 .ui-listview .ui-li-has-thumb .ui-li-thumb {
 	position: absolute;
 	left: 0;
-	top: 0;
+	top: 0; 
 	max-height: 5em;
 	max-width: 5em;
 }
