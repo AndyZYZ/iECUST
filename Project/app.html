@@ -28,7 +28,9 @@ jquery mobile parse
 	   
 	   
 	   $(document).ready(function(){
-            $("#login-submit").bind("click",function(){
+            
+			//登录
+			$("#login-submit").bind("click",function(){
 			    Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
 				
 				var myname = $("#login-studentnumber").val();
@@ -46,6 +48,34 @@ jquery mobile parse
 					}
 				});
   
+				
+			});
+			
+			//添加代办事项
+			$("#todo-add").bind("click",function(){
+				Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
+				var content = $("#todo-inputer").val();
+				
+				
+				var TodoList = Parse.Object.extend("TodoList");
+				var currentUser = Parse.User.current();
+				var todoObject = new TodoList();
+				
+				todoObject.set("todo",content);
+				todoObject.set("username",currentUser);
+				todoObject.set("check",false);
+				
+				todoObject.save(null, {
+					success: function(todoObject) {
+					// Execute any logic that should take place after the object is saved.
+					alert('New object created with objectId: ' + todoObject.id);
+					},
+					error: function(todoObject, error) {
+					// Execute any logic that should take place if the save fails.
+					// error is a Parse.Error with an error code and description.
+					alert('Failed to create new object, with error code: ' + error.description);
+					}
+				});
 				
 			});
 		});
