@@ -740,4 +740,14 @@ button[disabled],
 	outline-width: 1px;
 	outline-style: auto;
 }
+
+/*news image style*/
+.ui-listview .ui-li-has-thumb .ui-li-thumb {
+	position: absolute;
+	left: 0;
+	top: 21px; 
+	left: 10px;
+	max-height: 5em;
+	max-width: 5em;
+}
 			
