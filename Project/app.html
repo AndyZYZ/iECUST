@@ -52,6 +52,25 @@ jquery mobile parse
 			});
 			
 			//添加代办事项
+			var refreshTodo = function(){
+				var TodoList = Parse.Object.extend("TodoList");
+				var query = new Parse.Query(TodoList);
+				query.equalTo("username", Parse.User.current());
+				query.find({
+					success: function(results) {
+						alert("Successfully retrieved " + results.length + " todos");
+						// Do something with the returned Parse.Object values
+						for (var i = 0; i < results.length; i++) { 
+							var object = results[i];
+							alert(object.id + ' - ' + object.get('todo'));
+						}
+					},
+					error: function(error) {
+						alert("Error: " + error.code + " " + error.message);
+					}
+				});
+			};
+			
 			$("#todo-add").bind("click",function(){
 				Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
 				var content = $("#todo-inputer").val();
@@ -76,6 +95,8 @@ jquery mobile parse
 					alert('Failed to create new object, with error code: ' + error.description);
 					}
 				});
+				
+				refreshTodo();
 				
 			});
 		});
