@@ -41,6 +41,7 @@ jquery mobile parse
 					// Do stuff after successful login.
 					alert('登录成功')
 					window.location.href = "#pageHome";
+				    refreshTodo();
 					},
 					error: function(user, error) {
 					// The login failed. Check error to see why.
@@ -62,15 +63,30 @@ jquery mobile parse
 						// Do something with the returned Parse.Object values
 						for (var i = 0; i < results.length; i++) { 
 							var object = results[i];
-							alert(object.id + ' - ' + object.get('todo'));
+							//alert(object.id + ' - ' + object.get('todo'));
+							//$("#todomainlist").append("<li data-theme='a' data-icon='check' data-iconpos='right'>"+"<a href='' data-transition='none' class='ToDoDelete'>"+object.get("todo")+"</a>"+"</li>").trigger( "create" );
+						    $("<li data-theme='a' data-icon='check' data-iconpos='right'>"+"<a href='' data-transition='none' class='ToDoDelete'>"+object.get("todo")+"</a>"+"</li>").appendTo( "#todomainlist" ).trigger( "create" );
 						}
 					},
 					error: function(error) {
 						alert("Error: " + error.code + " " + error.message);
 					}
 				});
+
 			};
 			
+			$('#pageTodo').bind('pageinit', function() {
+				Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
+				refreshTodo();
+			});
+			$('#refreshbutton').bind('click',function() {
+				$("#todomainlist").listview("refresh");
+			});
+			
+			//删除待办事项
+			//$(".ToDoDelete").bind("Click",function(){
+				//alert(this);
+			//});
 			
 			
 			//添加代办事项
@@ -98,6 +114,7 @@ jquery mobile parse
 					alert('Failed to create new object, with error code: ' + error.description);
 					}
 				});
+				
 				
 				refreshTodo();
 				
@@ -155,7 +172,7 @@ jquery mobile parse
                 </a>
             </li>
             <li data-theme="a">
-                <a href="#pageTodo" data-transition="slide">
+                <a href="#pageTodo" data-transition="slide" id="todo-begin">
                     待办事项
                 </a>
             </li>
@@ -254,33 +271,14 @@ jquery mobile parse
         class="ui-btn  ui-icon-edit ui-btn-icon-left myButton">
             加入列表
         </a>
-        <div id="todo-checklist" class="ui-field-contain" data-controltype="checkboxes">
-            <fieldset data-role="controlgroup" data-type="vertical">
-                <input id="checkbox1" name="" data-theme="a" type="checkbox">
-                <label for="checkbox1">
-                    Option
-                </label>
-                <input id="checkbox2" name="" data-theme="a" type="checkbox">
-                <label for="checkbox2">
-                    Checkbox
-                </label>
-                <input id="checkbox3" name="" data-theme="a" type="checkbox">
-                <label for="checkbox3">
-                    Checkbox
-                </label>
-                <input id="checkbox4" name="" data-theme="a" type="checkbox">
-                <label for="checkbox4">
-                    Checkbox
-                </label>
-                <input id="checkbox5" name="" data-theme="a" type="checkbox">
-                <label for="checkbox5">
-                    Checkbox
-                </label>
-            </fieldset>
-        </div>
-        <a id="todo-complete" href="#pageTodo" data-icon="check" data-iconpos="left"
-        class="ui-btn  ui-icon-check ui-btn-icon-left myButton">
-            完成
+		<ul data-role="listview" data-divider-theme="a" data-inset="true" id="todomainlist">
+			<li data-role="list-divider" role="heading">
+					待办事项
+			</li>
+		    
+		</ul>
+		<a href="" class="ui-btn " id="refreshbutton">
+            Button
         </a>
     </div>
 </div>
