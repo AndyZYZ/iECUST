@@ -51,7 +51,7 @@ jquery mobile parse
 				
 			});
 			
-			//添加代办事项
+			//刷新代办事项
 			var refreshTodo = function(){
 				var TodoList = Parse.Object.extend("TodoList");
 				var query = new Parse.Query(TodoList);
@@ -71,6 +71,9 @@ jquery mobile parse
 				});
 			};
 			
+			
+			
+			//添加代办事项
 			$("#todo-add").bind("click",function(){
 				Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
 				var content = $("#todo-inputer").val();
