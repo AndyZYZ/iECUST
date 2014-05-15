@@ -124,6 +124,45 @@ jquery mobile parse
 				
 			});
 		});
+		
+		//待办事项删除事件绑定
+		$(document).on("click", ".ToDoDelete",function(){
+			Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
+			var TodoList = Parse.Object.extend("TodoList");
+			var query = new Parse.Query(TodoList);
+			query.equalTo("todo", $(this).html());
+			query.find({
+			  success: function(results) {
+				alert("Successfully finding todo matches!");
+				var query = new Parse.Query(results);
+				query.equalTo("username",Parse.User.current());
+				query.find({
+					  success: function(results) {
+						alert("Successfully finding todo && user matches!");
+						for (var i = 0; i < results.length; i++) { 
+                        var object = results[i];
+                        alert(object.id + ' - ' + object.get('todo'));
+						
+
+						}
+					  },
+					  error: function(error) {
+						alert("Error: " + error.code + " " + error.message);
+					  }
+				});
+
+			
+			},
+			  error: function(error) {
+				alert("Error: " + error.code + " " + error.message);
+			  }
+			});
+		
+			
+		});
+		
+		
+		
 </script>
 
 <div data-role="page" data-control-title="login" id="pageLogin" class="myPage">
