@@ -41,7 +41,7 @@ jquery mobile parse
 					// Do stuff after successful login.
 					alert('登录成功')
 					window.location.href = "#pageHome";
-				    refreshTodo();
+				    
 					},
 					error: function(user, error) {
 					// The login failed. Check error to see why.
@@ -59,14 +59,17 @@ jquery mobile parse
 				query.equalTo("username", Parse.User.current());
 				query.find({
 					success: function(results) {
-						alert("Successfully retrieved " + results.length + " todos");
+						//alert("Successfully retrieved " + results.length + " todos");
 						// Do something with the returned Parse.Object values
 						for (var i = 0; i < results.length; i++) { 
 							var object = results[i];
 							//alert(object.id + ' - ' + object.get('todo'));
 							//$("#todomainlist").append("<li data-theme='a' data-icon='check' data-iconpos='right'>"+"<a href='' data-transition='none' class='ToDoDelete'>"+object.get("todo")+"</a>"+"</li>").trigger( "create" );
-						    $("<li data-theme='a' data-icon='check' data-iconpos='right'>"+"<a href='' data-transition='none' class='ToDoDelete'>"+object.get("todo")+"</a>"+"</li>").appendTo( "#todomainlist" ).trigger( "create" );
-						}
+						    $("<li data-theme='a' data-icon='check' data-iconpos='right'>"+"<a href='' data-transition='none' id="+"todo"+i+" class='ToDoDelete'>"+object.get("todo")+"</a>"+"</li>").appendTo( "#todomainlist" ).trigger( "create" );
+						};
+					    
+						$("#todomainlist").listview("refresh");
+
 					},
 					error: function(error) {
 						alert("Error: " + error.code + " " + error.message);
@@ -79,13 +82,11 @@ jquery mobile parse
 				Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
 				refreshTodo();
 			});
-			$('#refreshbutton').bind('click',function() {
-				$("#todomainlist").listview("refresh");
-			});
+
 			
 			//删除待办事项
-			//$(".ToDoDelete").bind("Click",function(){
-				//alert(this);
+			//$(".ToDoDelete").bind("Click",function(event){
+				//alert($(event).attr("id"));
 			//});
 			
 			
@@ -106,7 +107,10 @@ jquery mobile parse
 				todoObject.save(null, {
 					success: function(todoObject) {
 					// Execute any logic that should take place after the object is saved.
-					alert('New object created with objectId: ' + todoObject.id);
+					//alert('New object created with objectId: ' + todoObject.id);
+					location.reload();
+					
+					
 					},
 					error: function(todoObject, error) {
 					// Execute any logic that should take place if the save fails.
@@ -115,8 +119,8 @@ jquery mobile parse
 					}
 				});
 				
+
 				
-				refreshTodo();
 				
 			});
 		});
@@ -277,9 +281,6 @@ jquery mobile parse
 			</li>
 		    
 		</ul>
-		<a href="" class="ui-btn " id="refreshbutton">
-            Button
-        </a>
     </div>
 </div>
 <div data-role="page" data-control-title="score" id="pageScore" class="myPage">
