@@ -123,43 +123,43 @@ jquery mobile parse
 				
 				
 			});
-		});
 		
-		//待办事项删除事件绑定
-		$(document).on("click", ".ToDoDelete",function(){
-			Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
-			var TodoList = Parse.Object.extend("TodoList");
-			var query = new Parse.Query(TodoList);
-			query.equalTo("todo", $(this).html());
-			query.find({
-			  success: function(results) {
-				alert("Successfully finding todo matches!");
-				var query = new Parse.Query(results);
-				query.equalTo("username",Parse.User.current());
-				query.find({
-					  success: function(results) {
-						alert("Successfully finding todo && user matches!");
-						for (var i = 0; i < results.length; i++) { 
-                        var object = results[i];
-                        alert(object.id + ' - ' + object.get('todo'));
-						
-
+						//待办事项删除事件绑定
+			$(document).on("click", ".ToDoDelete",function(){
+				Parse.initialize("UQy6m1MZPnb4HPQgyAaOmqsiv5hr4b9Bnstqtylv", "eChC6rycKdRmoyGQl5QWh1C89ajTr5wcjkklB02A");
+				var TodoList = Parse.Object.extend("TodoList");
+				var todoquery = new Parse.Query(TodoList);
+				todoquery.equalTo("todo", $(this).html());
+				var userquery = new Parse.Query(TodoList);
+				userquery.equalTo("username",Parse.User.current());
+				todoquery.find({
+					
+					success: function(todoresults) {
+						for (var i = 0; i < todoresults.length; i++) { 
+							var object = todoresults[i];
+							//alert(object.id + ' - ' + object.get('todo'));
+							object.destroy({
+								success: function(results) {
+									// The object was deleted from the Parse Cloud.
+									alert("delete successful!");
+									location.reload();
+								},
+								error: function(results, error) {
+									// The delete failed.
+									// error is a Parse.Error with an error code and description.
+								}
+							});
 						}
-					  },
-					  error: function(error) {
+					},
+					
+					error: function(error) {
 						alert("Error: " + error.code + " " + error.message);
-					  }
-				});
-
-			
-			},
-			  error: function(error) {
-				alert("Error: " + error.code + " " + error.message);
-			  }
+					}
+				});	
 			});
-		
-			
 		});
+		
+
 		
 		
 		
